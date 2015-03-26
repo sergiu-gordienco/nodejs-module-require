@@ -1,6 +1,6 @@
 {
   "name": "module-require",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "description": "Load modules, link modules to another module-names, manage access to custom / local scripts as modules",
   "main": "index.js",
   "scripts": {

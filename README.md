@@ -36,3 +36,76 @@ also giving some extra functionalities
 	// Using renamed module
 	var server	= mrequire("server-module");
 ```
+
+
+### Prepare a nodejs custom module with a function
+
+```javascript
+	// prepare a express server instance and store it as mrequire("express-server");
+	mrequire("express-server", function (mrequire, library) {
+		// library is "express-server"
+		var express = require('express');
+		var cookieParser = require('cookie-parser');
+		
+		var app = express();
+		app.use(cookieParser());
+
+		app.get('/', function(req, res) {
+			console.log("Cookies: ", req.cookies)
+		});
+
+		return app;
+	});
+	
+	// using our server
+	mrequire("express-server").get('/', function(req, res) {
+		console.log("Cookies: ", req.cookies);
+	});
+	mrequire("express-server").listen(8080);
+```
+
+
+### Prepare a nodejs custom module constructor with a function
+
+```javascript
+	// prepare a express server instance and store it as mrequire("express-server");
+	mrequire("express-server-builder", function (mrequire, library) {
+		return function () {
+			// library is "express-server"
+			var express = require('express');
+			var cookieParser = require('cookie-parser');
+			
+			var app = express();
+			app.use(cookieParser());
+
+			app.get('/', function(req, res) {
+				console.log("Cookies: ", req.cookies)
+			});
+
+			return app;
+		}
+	});
+	
+	// build server-1 instance using our server builder
+	mrequire("server-1", function (mrequire) {
+		mrequire("express-server-builder")();
+	});
+
+	// build server-2 instance using our server builder
+	mrequire("server-2", function (mrequire) {
+		mrequire("express-server-builder")();
+	});
+
+	// user server 1
+	mrequire("server-1").get('/', function(req, res) {
+		console.log(" Server 1 » Cookies: ", req.cookies);
+	});
+	mrequire("server-1").listen(8080);
+
+
+	// user server 2
+	mrequire("server-2").get('/', function(req, res) {
+		console.log(" Server 2 » Cookies: ", req.cookies);
+	});
+	mrequire("server-2").listen(8181);
+```

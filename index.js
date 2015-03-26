@@ -25,7 +25,11 @@ var __classes	= ((function () {
 				return __cache;
 		} else {
 			if (!(library in __cache)) {
-				__cache[library]	= require(library_source || library);
+				if (typeof(library_source) === "function") {
+					__cache[library]	= library_source(__load, library);
+				} else {
+					__cache[library]	= require(library_source || library);
+				}
 			}
 			return __cache[library];
 		}
