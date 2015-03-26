@@ -88,12 +88,12 @@ also giving some extra functionalities
 	
 	// build server-1 instance using our server builder
 	mrequire("server-1", function (mrequire) {
-		mrequire("express-server-builder")();
+		return mrequire("express-server-builder")();
 	});
 
 	// build server-2 instance using our server builder
 	mrequire("server-2", function (mrequire) {
-		mrequire("express-server-builder")();
+		return mrequire("express-server-builder")();
 	});
 
 	// user server 1
